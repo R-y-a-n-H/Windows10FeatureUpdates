@@ -10,7 +10,7 @@ Note: Once the application has been created within ConfigMgr, the script will ex
 ## Getting Started
 - [ ] Clone the repo
 - [ ] Replace `.\Content\Scripts\ADD_SETUPDIAG_HERE.MD` with `SetupDiag.exe` from [https://docs.microsoft.com/en-us/windows/deployment/upgrade/setupdiag](https://docs.microsoft.com/en-us/windows/deployment/upgrade/setupdiag)
-- [ ] Run `SetupFramework.ps1` with custom parameters (Example shown in `Usage`)
+- [ ] Run `SetupFramework.ps1` with custom parameters (Example shown in `Usage`) (NOTE: Requires Powershell v5.1 or newer for use of the 'New-Guid' command)
 
 ## Usage
 ```Powershell
@@ -76,22 +76,14 @@ Logs are written to `c:\~FeatureUpdateTemp\Logs` and `c:\Windows\CCM\Logs`
 
 After running SetupFUFramework you must do the following:
 
-- [ ] Add a Version detection Rule for SetupDiag.exe to the `Feature Update - SetupDiag Version` Configuration Item.
-`Rule Name:      SetupDiag.exe Version = 1.6.0.42`
-`Rule Type:      Value`
-`Property:       File Version`
-`Type            Equals`
-`Value:          1.6.0.42`
-`NonCompliance : Critical`
-
-- [ ] Import OSVersionHistory.MOF into Default Client Settings Hardware Inventory.
-- [ ] Import SetupDiag.MOF into Default Client Settings Hardware Inventory.
+- [ ] Import OSVersionHistory.MOF into Default Client Settings Hardware Inventory. (.\MOF\OSVersionHistory.mof)
+- [ ] Import SetupDiag.MOF into Default Client Settings Hardware Inventory. (.\MOF\SetupDiag.MOF)
 - [ ] Distribute Content for the application Feature Update - Client Content.
 - [ ] Deploy the application Feature Update - Client Content to all Windows 10 devices.
-- [ ] Deploy the Configuration Baseline  to all Windows 10 devices.
-- [ ] Deploy the Configuration Baseline  to all Windows 10 devices.
-- [ ] Deploy the Configuration Baseline  to all Windows 10 devices.
-- [ ] Create new Compliant collection for  Baseline Deployment.
+- [ ] Deploy the Configuration Baseline "Feature Update - Scripts and Files Are Present" to all Windows 10 devices.
+- [ ] Deploy the Configuration Baseline "Feature Update - No Logged On User Failure" to all Windows 10 devices.
+- [ ] Deploy the Configuration Baseline "Feature Update - Inventory OSVersionHistory and SetupDiag" to all Windows 10 devices.
+- [ ] Create new Compliant collection for "Feature Update - Scripts and Files Are Present" Baseline Deployment.
 - [ ] Create new Feature Update deployment collection using the  Baseline Deployment Compliant collection as the limiting collection.
 - [ ] Use this new collection as your limiting collection for all Feature Update deployments. It will ensure that you don't deploy to devices without Feature Update files staged.
 
